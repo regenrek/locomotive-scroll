@@ -253,11 +253,16 @@ function () {
           }
         }
 
-        if (el.inView) {
-          if (scrollBottom < el.top || scrollTop > el.bottom) {
-            _this2.setOutOfView(el, i);
+        if (el !== null) {
+          if (el.inView) {
+            if (scrollBottom < el.top || scrollTop > el.bottom) {
+              _this2.setOutOfView(el, i);
+            }
           }
         }
+      });
+      this.els = this.els.filter(function (current, i) {
+        return current !== null;
       });
       this.hasScrollTicking = false;
     }
@@ -277,7 +282,7 @@ function () {
 
       if (!current.repeat && !current.speed && !current.sticky) {
         if (!current.call || current.call && this.hasCallEventSet) {
-          this.els.splice(i, 1);
+          this.els[i] = null;
         }
       }
     }

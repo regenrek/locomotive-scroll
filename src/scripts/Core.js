@@ -74,17 +74,24 @@ export default class {
         const scrollBottom = scrollTop + this.windowHeight;
 
         this.els.forEach((el, i) => {
+            
             if (!el.inView || hasCallEventSet) {
                 if ((scrollBottom >= el.top) && (scrollTop < el.bottom)) {
                     this.setInView(el, i);
                 }
             }
 
-            if (el.inView) {
-                if ((scrollBottom < el.top) || (scrollTop > el.bottom)) {
-                    this.setOutOfView(el, i);
+            if(el !== null) {
+                if (el.inView) {
+                    if ((scrollBottom < el.top) || (scrollTop > el.bottom)) {
+                        this.setOutOfView(el, i);
+                    }
                 }
             }
+        });
+
+        this.els = this.els.filter(function(current, i) {
+            return current !== null;
         });
 
         this.hasScrollTicking = false;
@@ -104,7 +111,7 @@ export default class {
 
         if (!current.repeat && !current.speed && !current.sticky) {
             if (!current.call || current.call && this.hasCallEventSet) {
-                this.els.splice(i, 1);
+                this.els[i] = null;
             }
         }
     }
